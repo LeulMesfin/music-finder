@@ -1,6 +1,8 @@
 import { YStack, Avatar, XStack, Button } from 'tamagui'
 import { useEmailContext } from 'app/components/EmailComponent';
 import { AlertDialogBtn } from 'app/components/AlertDialog';
+import { tokenHook } from 'app/components/tokenHook';
+import { router, useRouter } from 'expo-router';
 
 /* task:
  * using the user's profile, store the id, then call delete user using the id
@@ -20,7 +22,7 @@ const deleteUser = async(id): Promise<any> => {
       console.error('Detailed error:', error);
       throw error;
     }
-  }
+}
 
 /* This asynchronous function makes a call to my Express API
  * to fetch a user based on email. This function takes in
@@ -51,9 +53,7 @@ const deleteUserFromDB = async(userEmail: string) => {
   }
 }
 
-const logOut = async() => {
 
-}
 /* This function handles the functionality
  * for the profile screen. A user should be able to
  * clear their playlists, delete their account, and/or
@@ -61,7 +61,15 @@ const logOut = async() => {
  * arguments and returns JSX markup. */
 const ProfileScreen = () => {
   const { email } = useEmailContext();
+  const { clearToken } = tokenHook();
   
+  /* Clear token, redirect to sign in page */
+  const logOut = async () => {
+    clearToken;
+    router.replace('/(auth)');
+    console.log("router replaced");
+  }
+
   return (
     <YStack f={1} gap="$12" pt="$7" ai="center">
         <XStack alignItems="center" space="$6">
@@ -83,7 +91,7 @@ const ProfileScreen = () => {
                 Delete Account
             </Button> */}
             <AlertDialogBtn func={() => deleteUserFromDB(email)} />
-            <Button themeInverse size="$6" backgroundColor="black" width={200} minWidth={200}>
+            <Button themeInverse size="$6" backgroundColor="black" width={200} minWidth={200} onPress={logOut}>
                 Log out
             </Button>
          </YStack>

@@ -15,12 +15,12 @@ export function EmailProvider({ children }: { children: React.ReactNode }) {
         {children}
       </EmailContext.Provider>
     );
-  }
+}
   
-  export function useEmailContext() {
-    const context = useContext(EmailContext);
-    if (context === undefined) {
-      throw new Error('useEmailContext must be used within an EmailProvider');
-    }
-    return context;
-  }  
+export function useEmailContext() {
+  const context = useContext(EmailContext);
+  if (context === undefined) {
+    throw new Error('useEmailContext must be used within an EmailProvider');
+  }
+  return context;
+}  
