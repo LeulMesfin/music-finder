@@ -13,6 +13,7 @@ import { Platform } from 'react-native'; // can delete
 import { storeToken } from 'app/components/tokenLayout';
 import { useEmailContext } from 'app/components/EmailComponent';
 import { tokenHook } from 'app/components/tokenHook';
+import { useProfileImageContext } from 'app/components/ProfileImageComponent';
 
 
 
@@ -81,6 +82,7 @@ const discovery = {
  * For more info: https://docs.expo.dev/guides/authentication/#improving-user-experience 
  * https://developer.spotify.com/documentation/web-api/tutorials/code-flow*/
 export const SignInScreen = ({ onSignIn }) => {
+  const { profileImage, setProfileImage } = useProfileImageContext();
   const { email, setEmail } = useEmailContext();
   const { token, updateToken, clearToken, generateToken } = tokenHook();
   
@@ -119,6 +121,9 @@ export const SignInScreen = ({ onSignIn }) => {
             }
 
             const profile = await fetchProfile(token);
+            console.log("profile images: ", profile.images[1].url);
+            setProfileImage(profile.images[1].url);
+            console.log("profile url: ", profile.images.url);
             setEmail(profile.email)
             const data = {
                 "email": profile.email,

@@ -7,6 +7,7 @@ import { SplashScreen, Stack } from 'expo-router'
 import { TamaguiProvider } from 'tamagui'
 import { EmailProvider } from './components/EmailComponent'
 import tamaguiConfig from 'tamagui.config'
+import { ProfileImageProvider } from './components/ProfileImageComponent'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -61,7 +62,9 @@ const RootLayoutNav = () => {
   return (
     // Passing emailProvider state to the app using a context
     <EmailProvider>
-      <App />
+      <ProfileImageProvider>
+        <App />
+      </ProfileImageProvider>
     </EmailProvider>
   )
 }

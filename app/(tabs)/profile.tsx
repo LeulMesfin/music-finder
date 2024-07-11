@@ -3,6 +3,7 @@ import { useEmailContext } from 'app/components/EmailComponent';
 import { AlertDialogBtn } from 'app/components/AlertDialog';
 import { tokenHook } from 'app/components/tokenHook';
 import { router, useRouter } from 'expo-router';
+import { useProfileImageContext } from 'app/components/ProfileImageComponent';
 
 /* task:
  * using the user's profile, store the id, then call delete user using the id
@@ -61,6 +62,7 @@ const deleteUserFromDB = async(userEmail: string) => {
  * arguments and returns JSX markup. */
 const ProfileScreen = () => {
   const { email } = useEmailContext();
+  const { profileImage } = useProfileImageContext();
   const { clearToken } = tokenHook();
   
   /* Clear token, redirect to sign in page */
@@ -70,13 +72,15 @@ const ProfileScreen = () => {
     console.log("router replaced");
   }
 
+  console.log("profile url: ", profileImage);
   return (
     <YStack f={1} gap="$12" pt="$7" ai="center">
         <XStack alignItems="center" space="$6">
             <Avatar circular size="$15">
                 <Avatar.Image
-                accessibilityLabel="Nate Wienert"
-                src={require('../../assets/images/goat.jpeg')}
+                accessibilityLabel="ronaldo messi"
+                src={`${profileImage}`}
+                // src={require('../../assets/images/goat.jpeg')}
                 // src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?&w=100&h=100&dpr=2&q=80"
                 />
                 <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
